@@ -1,10 +1,11 @@
-name: Link check
+name: Link check cron job
+
+# the role of this link check action is to periodically look for links
+# that have died since last QA. If broken links are found, action still passes
+# and an issue is created
 
 on:
-  pull_request:
   workflow_dispatch:
-    branches: [ "main" ]
-    types: [opened, synchronize]
   schedule:
     - cron: "05 07 * * 1" #run at 7:05 am  every Mon
 

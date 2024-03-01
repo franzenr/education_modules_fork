@@ -1,0 +1,25 @@
+name: Link check for PRs
+
+# the role of this link check action is to ensure no already broken links
+# are committed to the repo. if one is found, the action fails to prevent merge
+# no issue is created, as it is expected that the link be fixed as part of the open PR
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ "main" ]
+    types: [opened, synchronize]
+
+jobs:
+  linkChecker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Link Checker
+        id: lychee
+        uses: lycheeverse/lychee-action@v1.9.0
+
+      - name: conditional fail
+        if: env.lychee_exit_code != 0
+        run: exit 1
