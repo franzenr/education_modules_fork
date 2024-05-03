@@ -25,11 +25,11 @@ jobs:
 
       - name: Check for remaining issues
         run: |
-          if grep -q "###" issue_content.md \
-            then \
-              file_has_content=1 \
-            else \
-              file_has_content=0 \
+          if grep -q "###" issue_content.md 
+            then 
+              file_has_content=1 
+            else 
+              file_has_content=0 
           fi
           
       - name: Create Issue From File
