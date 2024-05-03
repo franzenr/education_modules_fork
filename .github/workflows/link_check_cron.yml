@@ -27,15 +27,15 @@ jobs:
         run: |
           if grep -q "###" issue_content.md 
             then 
-              file_has_content=1 
+              echo "FILE_HAS_CONTENT=1" >> $GITHUB_ENV
             else 
               file_has_content=0 
           fi
       - name: check on file content var
         run: echo "dollar sign " $file_has_content "env " env.file_has_content
-        
+
       - name: Create Issue From File
-        if: env.file_has_content != 0
+        if: env.FILE_HAS_CONTENT != 0
         uses: peter-evans/create-issue-from-file@v5
         with:
           title: Link Checker Report
