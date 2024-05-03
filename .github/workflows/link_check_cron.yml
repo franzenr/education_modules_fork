@@ -25,7 +25,7 @@ jobs:
             then \
               file_has_content=1 \
             else \
-              file_has_content=0
+              file_has_content=0 \
           fi
 
       - name: Create Issue From File
