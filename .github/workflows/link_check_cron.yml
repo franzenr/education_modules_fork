@@ -30,9 +30,10 @@ jobs:
         run: |
           bash if grep -q "###" issue_content.md \
             then \
-              file-has-content=1 \
+              file_has_content=1 \
             else \
-              file-has-content=0
+              file_has_content=0
+          fi
 
       - name: Create Issue From File
         if: env.file-has-content != 0
