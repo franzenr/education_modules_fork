@@ -18,7 +18,7 @@ jobs:
       - name: Link Checker
         id: lychee
         uses: lycheeverse/lychee-action@v1.9.0
-
+    
       - name: Remove files with known issues
         run: |
           awk '/^###/{printf $0; next} 1' ./lychee/out.md | \ # if the line starts with ###, print that line WITHOUT the newline, otherwise print as normal
