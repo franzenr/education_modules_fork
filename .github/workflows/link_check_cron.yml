@@ -19,10 +19,25 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v1.9.0
 
+      - name: Remove files with known issues
+        run: |
+          awk '/^###/{printf $0; next} 1' ./lychee/out.md | \ # if the line starts with ###, print that line WITHOUT the newline, otherwise print as normal
+            awk 'BEGIN {RS="\n\n"; ORS="\n\n"} \ 
+            !/how_to_troubleshoot|macros\.md|macros_python\.md|demystifying_regular_expressions/' > issue_content.md
+        : # remove all content for failed links in above files (which have necessary content that cause failures)
+      
+      - name: Check for remaining issues
+        run: |
+          bash if grep -q "###" issue_content.md \
+            then \
+              file-has-content=1 \
+            else \
+              file-has-content=0
+
       - name: Create Issue From File
-        if: env.lychee_exit_code != 0
+        if: env.file-has-content != 0
         uses: peter-evans/create-issue-from-file@v5
         with:
           title: Link Checker Report
-          content-filepath: ./lychee/out.md
+          content-filepath: issue_content.md
           labels: report, automated issue, bug
