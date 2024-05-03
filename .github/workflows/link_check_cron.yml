@@ -30,7 +30,7 @@ jobs:
               file_has_content=1 \
             else \
               file_has_content=0 \
-          fi
+          fi;
           echo $file_has_content
       - name: Create Issue From File
         if: env.file_has_content != 0
