@@ -31,7 +31,9 @@ jobs:
             else 
               file_has_content=0 
           fi
-          
+      - name: check on file content var
+        run: echo "dollar sign " $file_has_content "env " env.file_has_content
+        
       - name: Create Issue From File
         if: env.file_has_content != 0
         uses: peter-evans/create-issue-from-file@v5
